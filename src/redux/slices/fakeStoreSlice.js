@@ -13,12 +13,14 @@ const fakeStoreSlice = createSlice({
     setProduct: (state, action) => {
       return { ...state, product: action?.payload };
     },
-    setIdTitleOfProduct: (state, { payload: { id, title } }) => {
+    setIdTitleOfProduct: (state, action) => {
+      console.log({ action });
+      const { id, title } = action?.payload;
       return {
         ...state,
         idTitleOfProduct: {
-          id: Number(id),
-          title: String(title).toUpperCase(),
+          id: id,
+          title: title,
         },
       };
     },
