@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { decrement, increment } from "./redux/slices/counterSlice";
+import { getProduct } from "./api/fakestore";
 
-function App() {
+function Counter() {
+  const StoredCount = useSelector((state) => state.counter);
+  const dispatch = useDispatch();
+  const inputRef = useRef();
+
+  const handleOnClick = () => {
+    const input_number = inputRef.current.value;
+    console.log({ input_number });
+    dispatch(getProduct(input_number));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <span>{StoredCount?.count}</span>
+      <div>
+        <button
+          aria-label="Increment value"
+          onClick={() => dispatch(increment())}>
+          Increment
+        </button>
+        <button
+          aria-label="Decrement value"
+          onClick={() => dispatch(decrement())}>
+          Decrement
+        </button>
+      </div>
+      <input type="number" name="ID" id="ID" ref={inputRef} />
+      <button onClick={handleOnClick}>Set Data</button>
     </div>
   );
 }
 
-export default App;
+export { Counter };
